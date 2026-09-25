@@ -1,0 +1,60 @@
+# Builds the static website and copies it to the team server, where Caddy serves it
+# (stack defined in traffic-event-detection/deploy). Deploy is skipped until the
+# repository variable DEPLOY_ENABLED is "true".
+name: Build and deploy website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+        env:
+          # Same origin as the site by default; override if the API lives elsewhere.
+          VITE_API_BASE: ${{ vars.API_BASE || '' }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+      - name: Upload to the server
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: dist/*
+          target: ${{ vars.SITE_DIR }}.incoming
+          strip_components: 1
+          rm: true
+      # Sync in place: Caddy bind-mounts SITE_DIR, so the directory itself must not be replaced.
+      - name: Publish
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: rsync -a --delete '${{ vars.SITE_DIR }}.incoming/' '${{ vars.SITE_DIR }}/'
