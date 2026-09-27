@@ -4,7 +4,7 @@ import { Section } from '../components/ui'
 import { getJob, getJobResult, getLimits, uploadVideo, type Limits } from '../lib/data'
 import type { JobResult } from '../lib/types'
 
-const DEFAULT_LIMITS: Limits = { max_upload_mb: 300, max_duration_sec: 150 }
+const DEFAULT_LIMITS: Limits = { max_upload_mb: 300, max_duration_sec: 120 }
 
 type Phase =
   | { kind: 'idle' }
@@ -82,7 +82,7 @@ export function Demo() {
       id="demo"
       eyebrow="Live demo"
       title="Try it on your own clip"
-      lead={`Upload an .mp4 from a road camera (up to ${limits.max_upload_mb} MB and ${Math.round(limits.max_duration_sec / 60 * 10) / 10} minutes). The same code we submitted runs on our server's CPU, so expect roughly a few seconds of processing per second of video.`}
+      lead={`Upload an .mp4 from a road camera (up to ${limits.max_upload_mb} MB and ${Math.round(limits.max_duration_sec / 60 * 10) / 10} minutes). The same pipeline and rules we submitted run on our 2-core server with a lighter detector setting, so expect about 2–3 seconds of processing per second of video.`}
     >
       <div className="stack">
         {online === false && <div className="notice">The demo server is offline right now. Please try again later.</div>}
@@ -152,7 +152,7 @@ export function Demo() {
                 Download JSON
               </a>
             </div>
-            <EventPlayer duration={phase.result.video.duration} events={phase.result.events} risk={phase.result.risk} videoSrc={fileUrl ?? undefined} />
+            <EventPlayer duration={phase.result.video.duration} events={phase.result.events} risk={phase.result.risk} signals={phase.result.signals} videoSrc={fileUrl ?? undefined} />
           </div>
         )}
       </div>

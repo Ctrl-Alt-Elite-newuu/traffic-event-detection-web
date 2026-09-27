@@ -55,6 +55,7 @@ export interface JobStatus {
 
 export interface JobResult {
   video: { name: string; duration: number; fps: number; width: number; height: number }
+  signals?: SignalPhase[]
   events: EventRow[]
   risk: RiskPoint[]
 }
