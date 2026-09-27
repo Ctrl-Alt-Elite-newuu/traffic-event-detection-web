@@ -67,20 +67,21 @@ function Person({ m }: { m: Member }) {
           ))}
         </ul>
         {m.proudOf && m.proudOf.length > 0 && (
-          <div style={{ fontSize: '0.85rem', marginTop: 8 }}>
-            <span className="muted">Proud of: </span>
-            {m.proudOf.map((p, i) => (
-              <span key={p.title}>
-                {i > 0 && ', '}
-                {isSet(p.url) ? (
-                  <a href={p.url} target="_blank" rel="noreferrer">
-                    {p.title}
-                  </a>
-                ) : (
-                  p.title
-                )}
-              </span>
-            ))}
+          <div style={{ fontSize: '0.85rem', marginTop: 10 }}>
+            <div className="muted">Previous projects</div>
+            <ul className="clean">
+              {m.proudOf.map((p) => (
+                <li key={p.title}>
+                  {isSet(p.url) ? (
+                    <a href={p.url} target="_blank" rel="noreferrer">
+                      {p.title} ↗
+                    </a>
+                  ) : (
+                    p.title
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         {links.length > 0 && (
