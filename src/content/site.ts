@@ -25,12 +25,21 @@ export interface Member {
 export const TEAM: Member[] = [
   {
     name: 'Asila Muxitdinova',
-    role: 'TODO: role',
-    did: ['TODO: what you built'],
-    github: 'TODO',
+    role: 'Team lead · ML pipeline, backend & DevOps',
+    did: [
+      'Detection and tracking pipeline (YOLO11s + ByteTrack), per-video camera alignment and traffic-light reading from pixels',
+      'Scene layout, learned road and flow priors, and the event rules (jaywalking, stopped vehicle, failure to yield, red-light running, wrong-way driving)',
+      'Part B accident-risk model (time to collision) and its tuning from 9 to 0.1 false alarms per minute',
+      'Demo API, Docker image, CI/CD with the dev → main flow, and deployment behind HTTPS on our server',
+      'This website: EDA, annotated sample videos, interactive results and the live demo',
+    ],
+    github: 'https://github.com/Asilaaa',
     linkedin: 'TODO',
     portfolio: 'TODO',
-    proudOf: [{ title: 'TODO: a previous project', url: 'TODO' }],
+    proudOf: [
+      { title: 'MedSim — backend and DevOps', url: 'https://medsim.plus/' },
+      { title: 'MultiGuard — backend, frontend and ML integration (in active research)', url: 'https://dashboard.multiguard.sukoon.uz/dashboard' },
+    ],
   },
   {
     name: 'Shaxnozaxon Abdusalomova',
