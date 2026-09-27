@@ -88,6 +88,27 @@ export function Approach() {
         </div>
       </div>
 
+      <div className="grid-2" style={{ marginTop: 16 }}>
+        <div className="card">
+          <h3>How we ship it</h3>
+          <ul className="clean">
+            <li>Work lands on <code>dev</code>; <code>main</code> changes only through pull requests, protected against force pushes and deletion.</li>
+            <li>Every push runs CI: a clean install, the harness interface check and the official format check on our predictions.</li>
+            <li>Only a merge into <code>main</code> publishes the demo image and deploys it, pinned to the exact commit so it can be rolled back.</li>
+            <li>Least-privilege workflow tokens, pinned dependencies, and no secrets or videos in git.</li>
+          </ul>
+        </div>
+        <div className="card">
+          <h3>How the demo is protected</h3>
+          <ul className="clean">
+            <li>A dedicated, key-only server user deploys it, separate from the other projects on the machine.</li>
+            <li>The API is reachable only through the HTTPS reverse proxy (Let&apos;s Encrypt), never directly.</li>
+            <li>Uploads are capped at the proxy and in the app, checked to be a playable video of at most 2 minutes, processed one at a time, and deleted right after.</li>
+            <li>Known gaps, stated plainly: the container runs as root and there is no per-client rate limit yet.</li>
+          </ul>
+        </div>
+      </div>
+
       <div style={{ marginTop: 32 }}>
         <Figure
           src={dataUrl('eda/scene_layout.jpg')}
