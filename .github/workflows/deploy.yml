@@ -47,10 +47,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: dist/*
-          target: ${{ vars.SITE_DIR }}.incoming
+          # staged in /tmp: the deploy user owns SITE_DIR but not its parent directory
+          target: /tmp/site-incoming-${{ github.run_id }}
           strip_components: 1
-          rm: true
-      # Sync in place: Caddy bind-mounts SITE_DIR, so the directory itself must not be replaced.
       - name: Publish
         uses: appleboy/ssh-action@v1.2.5
         with:
@@ -58,4 +57,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: rsync -a --delete '${{ vars.SITE_DIR }}.incoming/' '${{ vars.SITE_DIR }}/'
+          # sync in place (keeps SITE_DIR itself, which Caddy serves), then drop the staging copy
+          script: |
+            set -e
+            rsync -a --delete '/tmp/site-incoming-${{ github.run_id }}/' '${{ vars.SITE_DIR }}/'
+            rm -rf '/tmp/site-incoming-${{ github.run_id }}'
