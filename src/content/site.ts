@@ -63,7 +63,6 @@ export const REPORT = {
     'Checking assumptions against the data: 99% of the near carriageway\'s stop-line crossings happen on the visible green, so its hidden signal runs in phase with the visible one — and the far carriageway\'s do not, so we only judge red-light running where the signal is actually known.',
     'A learned scene prior: where vehicles drive and in which direction, averaged over every track in the samples, gives the carriageway mask for jaywalking and the reference direction for wrong-way driving.',
     'Part B false alarms fell from ~9 to ~0.1 per minute once we saw that almost all of them were a car passing a queued car in the next lane, which the oblique view makes look like a collision course.',
-    'TODO: add per-class scores on our dev labels.',
   ],
   didnt: [
     'Decoding 4K H.264 is the real bottleneck: reading every frame alone takes ~0.75× real time on a laptop CPU, so detection has to be sparse and downscaled.',
@@ -71,9 +70,13 @@ export const REPORT = {
     'Pixel speeds lie in a perspective view: distant cars move a few pixels per second and looked "stopped" until we measured speed in box heights per second.',
     'Rear-end collisions with a stationary vehicle are not anticipated by Part B: excluding stationary vehicles was the price of removing the queue false alarms.',
     'On a laptop CPU the full pipeline runs at ~9× real time (90% of it in YOLO); it relies on the evaluation GPU to fit the 3× budget.',
-    'TODO: classes we dropped because they produced too many false positives, and failure cases.',
+    'We could not measure recall or boundary accuracy before the deadline: the rules were checked by looking at every detection, but per-class F1 against our own labels was not finished.',
+    'Nine classes are deliberately not predicted (accident, near miss, turns, U-turns, solid-line crossing, stop-line violation, congestion, obstacles, fire): without examples in the samples we could not make them precise, and a wrongly predicted class costs a full zero in the macro F1.',
   ],
   next: [
-    'TODO: what we would do with more time (e.g. a learned accident / near-miss clip classifier, better re-identification across occlusions).',
+    'Finish our labels of the sample videos and tune every threshold against evaluate.py instead of by eye.',
+    'Learn accident and near-miss from public CCTV data (e.g. CADP) as a clip classifier on top of our TTC candidates.',
+    'Lane-level geometry (solid lines, turn lanes) to add illegal-turn and solid-line-crossing rules.',
+    'Run the demo container as a non-root user and pin GitHub Actions to commit SHAs.',
   ],
 }

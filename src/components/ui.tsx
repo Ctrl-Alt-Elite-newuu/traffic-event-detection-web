@@ -45,12 +45,3 @@ export function Tabs<T extends string>({ options, value, onChange, label }: { op
     </div>
   )
 }
-
-export function Todo({ children }: { children: ReactNode }) {
-  return (
-    <div className="notice">
-      <span aria-hidden>✎</span>
-      <span>{children}</span>
-    </div>
-  )
-}
