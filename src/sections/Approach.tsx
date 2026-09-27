@@ -20,9 +20,10 @@ const STEPS: { title: string; detail: string; kind: Kind }[] = [
 ]
 
 const PART_B = [
-  { title: 'Causal frames', detail: 'Only frames seen so far; skip frames internally', kind: 'rule' as Kind },
-  { title: 'Track + TTC', detail: 'Time-to-collision between pairs, hard braking, conflicts', kind: 'rule' as Kind },
-  { title: 'Calibrate', detail: 'Map risk signals so 0.5 ≈ "accident probably within 5 s"', kind: 'rule' as Kind },
+  { title: 'Causal frames', detail: 'Only frames seen so far; detector + tracker every 6th frame (5 Hz)', kind: 'learned' as Kind },
+  { title: 'Velocities', detail: 'Each vehicle\'s velocity fitted over the last 1.2 s, in the reference view', kind: 'rule' as Kind },
+  { title: 'Time to collision', detail: 'Pairs of moving vehicles on converging paths that would touch within 1.5 s', kind: 'rule' as Kind },
+  { title: 'Calibrate', detail: 'Tuned to ~0.1 false alarms per minute on 18 min of normal traffic', kind: 'rule' as Kind },
 ]
 
 function Flow({ steps }: { steps: { title: string; detail: string; kind: Kind }[] }) {

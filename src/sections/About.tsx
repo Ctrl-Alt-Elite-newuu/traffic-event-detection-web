@@ -114,7 +114,7 @@ export function Links() {
     { label: 'Code repository', url: LINKS.repo, note: 'solution.py, rules, training and export scripts' },
     { label: 'Model weights', url: LINKS.weights, note: 'YOLO11s (COCO), shipped in the repository' },
     { label: 'predictions_samples.json', url: LINKS.predictions, note: 'our output on the four sample videos' },
-    { label: 'Website source', url: LINKS.website, note: 'this site' },
+    { label: 'Website source', url: LINKS.website, note: 'this site, live at ctrl-alt-elite.sukoon.uz' },
   ]
   return (
     <Section id="links" eyebrow="Links" title="Everything, in one place">
