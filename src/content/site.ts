@@ -51,13 +51,15 @@ export const TEAM: Member[] = [
     github: 'https://github.com/shaxnozaabdusalomova2905',
   },
   {
-    name: 'TODO: third member',
-    role: 'TODO: role',
-    did: ['TODO: what you built'],
-    github: 'TODO',
+    name: 'Shaxnozaxon Norxo\'jayeva',
+    role: 'Testing & website',
+    did: [
+      'Analyzed the traffic-camera video and identified relevant events',
+      'Worked on the team website'
+    ],
+    github: 'https://github.com/norxojayeva',
     linkedin: 'TODO',
     portfolio: 'TODO',
-    proudOf: [{ title: 'TODO: a previous project', url: 'TODO' }],
   },
 ]
 
